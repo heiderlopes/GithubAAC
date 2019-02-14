@@ -10,6 +10,9 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import javax.inject.Named
 import javax.inject.Singleton
+import com.facebook.stetho.okhttp3.StethoInterceptor
+import okhttp3.OkHttpClient
+
 
 @Module
 class NetModule {
@@ -20,10 +23,21 @@ class NetModule {
 
     @Provides
     fun provideRetrofit(gson: Gson,
-                        @Named("githubURL")githubURL: String): Retrofit {
+                        @Named("githubURL") githubURL: String,
+                        okhttp: OkHttpClient): Retrofit {
+
         return Retrofit.Builder()
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .baseUrl(githubURL)
+                .client(okhttp)
+                .build()
+    }
+
+    @Provides
+    @Singleton
+    fun provideOkhttpClient(): OkHttpClient {
+        return OkHttpClient.Builder()
+                .addNetworkInterceptor(StethoInterceptor())
                 .build()
     }
 
