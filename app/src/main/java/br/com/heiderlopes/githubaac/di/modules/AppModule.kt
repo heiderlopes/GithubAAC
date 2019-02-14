@@ -18,60 +18,11 @@ import java.util.concurrent.Executor
 import java.util.concurrent.Executors
 
 
-@Module(includes = [ViewModelModule::class])
+@Module
 class AppModule {
-
-    @Provides
-    @Singleton
-    fun provideDatabase(application: Application): MeuBancoDeDados {
-        return Room.databaseBuilder(
-                application,
-                MeuBancoDeDados::class.java, "MyDatabase.db"
-        )
-                .build()
-    }
-
-    @Provides
-    @Singleton
-    fun provideUserDao(database: MeuBancoDeDados): UserDAO {
-        return database.userDao()
-    }
 
     @Provides
     fun provideExecutor(): Executor {
         return Executors.newSingleThreadExecutor()
-    }
-
-    @Provides
-    @Singleton
-    fun provideUserRepository(
-            webservice: UserWebService,
-            userDao: UserDAO,
-            executor: Executor
-    ): UserRepository {
-        return UserRepository(webservice, userDao, executor)
-    }
-
-    @Provides
-    fun provideGson(): Gson {
-        return GsonBuilder().create()
-    }
-
-    @Provides
-    fun provideRetrofit(gson: Gson): Retrofit {
-        return Retrofit.Builder()
-                .addConverterFactory(GsonConverterFactory.create(gson))
-                .baseUrl(BASE_URL)
-                .build()
-    }
-
-    @Provides
-    @Singleton
-    fun provideApiWebservice(restAdapter: Retrofit): UserWebService{
-        return restAdapter.create(UserWebService::class.java)
-    }
-
-    companion object {
-        private val BASE_URL = "https://api.github.com/"
     }
 }

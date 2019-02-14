@@ -22,6 +22,21 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+
+    flavorDimensions "app"
+
+    productFlavors {
+        prod {
+            dimension "app"
+            buildConfigField "String", "GITHUB_URL", '"https://api.github.com/"'
+        }
+
+        dev {
+            applicationIdSuffix ".dev"
+            dimension "app"
+            buildConfigField "String", "GITHUB_URL", '"https://api.github.com/"'
+        }
+    }
 }
 
 dependencies {

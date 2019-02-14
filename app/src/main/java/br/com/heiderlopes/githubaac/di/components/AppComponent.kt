@@ -2,9 +2,7 @@ package br.com.heiderlopes.githubaac.di.components
 
 import android.app.Application
 import br.com.heiderlopes.githubaac.MyApp
-import br.com.heiderlopes.githubaac.di.modules.ActivityModule
-import br.com.heiderlopes.githubaac.di.modules.AppModule
-import br.com.heiderlopes.githubaac.di.modules.FragmentModule
+import br.com.heiderlopes.githubaac.di.modules.*
 import dagger.BindsInstance
 import dagger.Component
 import dagger.android.support.AndroidSupportInjectionModule
@@ -16,7 +14,8 @@ import javax.inject.Singleton
             AndroidSupportInjectionModule::class,
             ActivityModule::class,
             FragmentModule::class,
-            AppModule::class]
+            ViewModelModule::class,
+            RepositoryModule::class]
 )
 interface AppComponent {
 
